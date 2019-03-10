@@ -5,9 +5,14 @@
     position:relative;
     top:20px;
     left:475px;
+    border: 6px solid deeppink;
 }
 #svg{
     position:absolute;
+    z-index: 999;
+}
+#line{
+    z-index: 999;
 }
 .block{
     width: 100px;

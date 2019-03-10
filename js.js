@@ -14,6 +14,10 @@ window.onload = function () {
 
 
 function startGame() {
+    document.getElementById("clear").setAttribute("class", "displayNone");
+    let game = document.getElementById("game");
+    game.innerHTML = "";
+    game.removeAttribute("class");
     for (let i = 0; i < gameSize; i++) {
         let line = [gameSize];
         for (let j = 0; j < gameSize; j++) {
@@ -21,12 +25,8 @@ function startGame() {
         }
         gameField[i] = line;
     }
-    var game = document.getElementById("game");
 
     printGame();
-
-    document.getElementById("clear").addEventListener("click", clearData);
-
 
     var step = 0;
     game.onclick = function(event) {
@@ -57,21 +57,15 @@ function startGame() {
 }
 
 function checkWinner() {
-    if (checkHorizontal()) {
-        return true;
-    }
-    if (checkVertical()) {
-        return true;
-    }
-    if (checkDiagonal()) {
-        return true;
-    }
-    return false;
+    checkHorizontal();
+    checkVertical();
+    checkDiagonalFromLeftCorner();
+    checkDiagonalFromRightCorner();
 }
 
 function clearData() {
     document.getElementById("result").innerHTML = "";
-    var allBlock = document.getElementsByClassName("closed");
+    let allBlock = document.getElementsByClassName("closed");
     for (i = 0; i < allBlock.length; i++) {
         allBlock[i].innerHTML = "";
     }
@@ -81,19 +75,16 @@ function clearData() {
 }
 
 function printGame() {
-    var game = document.getElementById("game");
+    let game = document.getElementById("game");
     let svg = document.getElementById("svg");
     game.innerHTML = "";
-    if (svg) {
-        game.appendChild(svg);
-    }
-    for (var i = 0; i < gameSize; i++) {
-        for (var j = 0; j < gameSize; j++) {
-            var htmlElem = document.createElement("div");
+    for (let i = 0; i < gameSize; i++) {
+        for (let j = 0; j < gameSize; j++) {
+            let htmlElem = document.createElement("div");
 
             htmlElem.setAttribute("id", i + ',' + j);
             htmlElem.innerText = gameField[i][j];
-            if(gameField[i][j] == ""){
+            if(gameField[i][j] === ""){
                 htmlElem.setAttribute("class", "block")
             } else {
                 htmlElem.setAttribute("class", "closed")
@@ -101,10 +92,14 @@ function printGame() {
             game.appendChild(htmlElem);
         }
     }
+    if (svg) {
+        game.appendChild(svg);
+        game.setAttribute("class", "disabled");
+        document.getElementById("clear").setAttribute("class", "displayBlock");
+    }
 }
 
 function checkHorizontal(){
-    let value = false;
     for (let i = 0; i < gameSize; i++) {
         let line = gameField[i];
         if(isAllX(line) || isAllO(line)){
@@ -113,18 +108,54 @@ function checkHorizontal(){
             x1 = 0;
             x2 = width;
             printLine(x1,y1,x2,y2);
-            value = true;
         }
     }
-    return value;
 }
 
 function checkVertical(){
-
+    let array = [gameSize];
+    for (let i = 0; i < gameSize; i++) {
+        for (let j = 0; j < gameSize; j++) {
+            array[j] = gameField[j][i];
+        }
+        if (isAllX(array) || isAllO(array)) {
+            let x1, x2, y1, y2;
+            x1 = x2 = (i * side) + (side * 0.5);
+            y1 = 0;
+            y2 = height;
+            printLine(x1, y1, x2, y2);
+        }
+    }
 }
 
-function checkDiagonal(){
+function checkDiagonalFromLeftCorner(){
+    let array = [gameSize];
+    for (let i = 0; i < gameSize; i++) {
+        array[i] = gameField[i][i];
+    }
+    if (isAllX(array) || isAllO(array)) {
+        let x1, x2, y1, y2;
+        x1 = 0;
+        y1 = 0;
+        x2 = width;
+        y2 = height;
+        printLine(x1, y1, x2, y2);
+    }
+}
 
+function checkDiagonalFromRightCorner(){
+    let array = [gameSize];
+    for (let i = 0; i < gameSize; i++) {
+        array[i] = gameField[i][gameSize - 1 - i];
+    }
+    if (isAllX(array) || isAllO(array)) {
+        let x1, x2, y1, y2;
+        x1 = width;
+        y1 = 0;
+        x2 = 0;
+        y2 = height;
+        printLine(x1, y1, x2, y2);
+    }
 }
 
 function isAllX(arr){
@@ -151,20 +182,21 @@ function isAllO(arr){
 }
 
 function printLine(x1, y1, x2, y2) {
-    var svg = document.createElement("svg");
-    var line= document.createElement("line");
+    let svg = document.createElement("svg");
+    let line= document.createElement("line");
 
     svg.setAttribute("id","svg");
-    svg.setAttribute("height", height);
     svg.setAttribute("width", width);
+    svg.setAttribute("height", height);
+    svg.setAttribute("display", "block");
     line.setAttribute("x1", x1);
-    line.setAttribute("y1",y1);
-    line.setAttribute("x2",x2);
-    line.setAttribute("y2",y2);
+    line.setAttribute("y1", y1);
+    line.setAttribute("x2", x2);
+    line.setAttribute("y2", y2);
     line.setAttribute("stroke","blue");
     line.setAttribute("id", "line");
 
-    var game=document.getElementById("game");
+    let game=document.getElementById("game");
     game.appendChild(svg);
     svg.appendChild(line);
     game.insertBefore(svg, game.firstChild);

@@ -10,7 +10,6 @@
 }
 #svg{
     position:absolute;
-    max-width: 100%;
 }
 
 .block{
@@ -43,7 +42,6 @@
     text-align: center;
 }
 #clear{
-    display:none;
     background-color: lawngreen;
     font-size: 20px;
     width: 160px;
@@ -52,6 +50,12 @@
     top:220px;
     left:550px;
 }
+.displayNone {
+    display:none;
+}
+.displayBlock {
+    display:block;
+}
 #result{
     background-color: antiquewhite;
     border: 3px solid grey;
@@ -59,4 +63,8 @@
     font-weight: bold;
     text-align: center;
 
+}
+
+.disabled {
+    pointer-events: none;
 }

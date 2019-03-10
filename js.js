@@ -198,5 +198,4 @@ function printLine(x1, y1, x2, y2) {
 
     game.insertBefore(svg, game.firstChild);
     document.getElementById("svg").appendChild(line);
-    var blable;
 }

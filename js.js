@@ -182,11 +182,13 @@ function isAllO(arr){
 }
 
 function printLine(x1, y1, x2, y2) {
-    let svg = document.createElement("svg");
-    let line= document.createElement("line");
+    let svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    let line= document.createElementNS('http://www.w3.org/2000/svg','line');
+    let game=document.getElementById("game");
 
     svg.setAttribute("id","svg");
     svg.setAttribute("style", "width: " + width + "px; height: " + height + "px;");
+
     line.setAttribute("x1", x1);
     line.setAttribute("y1", y1);
     line.setAttribute("x2", x2);
@@ -194,7 +196,6 @@ function printLine(x1, y1, x2, y2) {
     line.setAttribute("stroke","blue");
     line.setAttribute("id", "line");
 
-    let game=document.getElementById("game");
-    svg.appendChild(line);
     game.insertBefore(svg, game.firstChild);
+    document.getElementById("svg").appendChild(line);
 }

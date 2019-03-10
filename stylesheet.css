@@ -5,10 +5,14 @@
     position:relative;
     top:20px;
     left:475px;
+    border: 6px solid deeppink;
+    display: block;
 }
+
 #svg{
     position:absolute;
 }
+
 .block{
     width: 100px;
     height: 100px;
@@ -19,10 +23,12 @@
     text-align: center;
     font-size: 60px;
 }
+
 .block:hover{
     border:4px solid lightblue;
     background-color: papayawhip;
 }
+
 .closed{
     width: 100px;
     height: 100px;
@@ -33,13 +39,14 @@
     text-align: center;
     font-size: 60px;
 }
+
 #name{
     text-shadow: 5px 4px 3px #999;
     color:blue;
     text-align: center;
 }
+
 #clear{
-    display:none;
     background-color: lawngreen;
     font-size: 20px;
     width: 160px;
@@ -48,6 +55,15 @@
     top:220px;
     left:550px;
 }
+
+.displayNone {
+    display:none;
+}
+
+.displayBlock {
+    display:block;
+}
+
 #result{
     background-color: antiquewhite;
     border: 3px solid grey;
@@ -55,4 +71,8 @@
     font-weight: bold;
     text-align: center;
 
+}
+
+.disabled {
+    pointer-events: none;
 }

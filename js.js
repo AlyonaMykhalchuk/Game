@@ -49,11 +49,9 @@ function startGame() {
 
             step++;
 
-            if (checkWinner()) {
+            checkWinner();
 
-            } else {
-                printGame();
-            }
+            printGame();
         }
     }
 }
@@ -84,7 +82,11 @@ function clearData() {
 
 function printGame() {
     var game = document.getElementById("game");
+    let svg = document.getElementById("svg");
     game.innerHTML = "";
+    if (svg) {
+        game.appendChild(svg);
+    }
     for (var i = 0; i < gameSize; i++) {
         for (var j = 0; j < gameSize; j++) {
             var htmlElem = document.createElement("div");
@@ -159,7 +161,7 @@ function printLine(x1, y1, x2, y2) {
     line.setAttribute("y1",y1);
     line.setAttribute("x2",x2);
     line.setAttribute("y2",y2);
-    line.setAttribute("stroke","red");
+    line.setAttribute("stroke","blue");
 
     var game=document.getElementById("game");
     game.appendChild(svg);

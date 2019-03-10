@@ -188,7 +188,6 @@ function printLine(x1, y1, x2, y2) {
     svg.setAttribute("id","svg");
     svg.setAttribute("width", width);
     svg.setAttribute("height", height);
-    svg.setAttribute("display", "block");
     line.setAttribute("x1", x1);
     line.setAttribute("y1", y1);
     line.setAttribute("x2", x2);

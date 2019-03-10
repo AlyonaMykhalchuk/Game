@@ -93,7 +93,7 @@ function printGame() {
         }
     }
     if (svg) {
-        game.appendChild(svg);
+        game.insertBefore(svg, game.firstChild);
         game.setAttribute("class", "disabled");
         document.getElementById("clear").setAttribute("class", "displayBlock");
     }
@@ -186,8 +186,7 @@ function printLine(x1, y1, x2, y2) {
     let line= document.createElement("line");
 
     svg.setAttribute("id","svg");
-    svg.setAttribute("width", width);
-    svg.setAttribute("height", height);
+    svg.setAttribute("style", "width: " + width + "px; height: " + height + "px;");
     line.setAttribute("x1", x1);
     line.setAttribute("y1", y1);
     line.setAttribute("x2", x2);
@@ -196,7 +195,6 @@ function printLine(x1, y1, x2, y2) {
     line.setAttribute("id", "line");
 
     let game=document.getElementById("game");
-    game.appendChild(svg);
     svg.appendChild(line);
     game.insertBefore(svg, game.firstChild);
 }

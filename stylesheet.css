@@ -1,11 +1,18 @@
+body{
+    background: repeating-linear-gradient(
+            to right,
+            palevioletred 0%, navajowhite 50px,
+
+            lightcyan 201px, antiquewhite 250px,
+            lightblue 251px, whitesmoke 300px,
+            peachpuff 301px, white 350px
+    );
+}
 #game{
-    width: 300px;
-    height: 300px;
     background-color: papayawhip;
     position:relative;
-    top:20px;
-    left:475px;
-    border: 6px solid deeppink;
+    margin: auto;
+    border: 10px solid hotpink;
     display: block;
 }
 
@@ -17,7 +24,7 @@
     width: 100px;
     height: 100px;
     float:left;
-    border: 2px solid lightpink;
+    border: 6px solid white;
     box-sizing: border-box;
     line-height: 50px;
     text-align: center;
@@ -33,27 +40,30 @@
     width: 100px;
     height: 100px;
     float:left;
-    border: 2px solid lightblue;
+    border: 6px solid white;
     box-sizing: border-box;
     line-height: 50px;
     text-align: center;
     font-size: 60px;
+    background-color: pink;
 }
 
 #name{
+    background-color: white;
     text-shadow: 5px 4px 3px #999;
     color:blue;
     text-align: center;
 }
 
 #clear{
-    background-color: lawngreen;
+    background-color: greenyellow;
     font-size: 20px;
     width: 160px;
     height: 55px;
-    position:absolute;
-    top:220px;
-    left:550px;
+    position:relative;
+    top: 20px;
+    margin: auto;
+
 }
 
 .displayNone {
@@ -75,4 +85,15 @@
 
 .disabled {
     pointer-events: none;
+}
+#winner{
+    display: block;
+    top: 20px;
+    position: relative;
+    background-color: white;
+    color:red;
+    text-align: center;
+    font-weight: bold;
+    font-size: x-large;
+
 }

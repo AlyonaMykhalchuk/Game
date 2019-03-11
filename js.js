@@ -1,12 +1,16 @@
+//create variable size of game field
 var gameSize = 3;
 var side = 100;
+var height = gameSize * side;
+var width = gameSize * side;
+
+var gameField = [gameSize];
+//variable of line position
 var x1;
 var y1;
 var x2;
 var y2;
-var height = gameSize * side;
-var width = gameSize * side;
-var gameField = [gameSize];
+
 
 window.onload = function () {
     startGame();
@@ -14,24 +18,12 @@ window.onload = function () {
 
 
 function startGame() {
-    document.getElementById("clear").setAttribute("class", "displayNone");
-    let game = document.getElementById("game");
-    game.innerHTML = "";
-    game.removeAttribute("class");
-    for (let i = 0; i < gameSize; i++) {
-        let line = [gameSize];
-        for (let j = 0; j < gameSize; j++) {
-            line[j] = "";
-        }
-        gameField[i] = line;
-    }
-
-    printGame();
-
+    clearData();//
+    populateArrayWithValues();// fill the two-dimensional array with initial values
+    printGame();// draw array
     var step = 0;
     game.onclick = function(event) {
         console.log(event);
-       // var symbol = "0"
         if (event.target.className === "block") {
             let id = event.target.getAttribute("id");
             let array = id.split(',');
@@ -44,36 +36,51 @@ function startGame() {
             else {
                 gameField[i][j] = "0";
             }
-          //  event.target.innerText = symbol;
-            event.target.className = "closed";
 
             step++;
-
             checkWinner();
+            // check standoff ,activate button,print message result
+            if (step === gameSize * gameSize) {
+                game.setAttribute("class", "disabled");
+                document.getElementById("clear").setAttribute("class", "displayBlock");
+                let winner= document.getElementById("winner");
+                winner.innerText= "No winner!";
 
+            }
             printGame();
+
         }
     }
 }
-
+// fill the two-dimensional array with initial values
+function populateArrayWithValues() {
+    for (let i = 0; i < gameSize; i++) {
+        let line = [gameSize];
+        for (let j = 0; j < gameSize; j++) {
+            line[j] = "";
+        }
+        gameField[i] = line;
+    }
+}
+//check winner combination
 function checkWinner() {
     checkHorizontal();
     checkVertical();
     checkDiagonalFromLeftCorner();
     checkDiagonalFromRightCorner();
+
+
 }
 
 function clearData() {
-    document.getElementById("result").innerHTML = "";
-    let allBlock = document.getElementsByClassName("closed");
-    for (i = 0; i < allBlock.length; i++) {
-        allBlock[i].innerHTML = "";
-    }
-    document.getElementById("game").innerHTML="";
-    startGame();
-
+    document.getElementById("clear").setAttribute("class", "displayNone");
+    let game = document.getElementById("game");
+    game.innerHTML = "";
+    game.removeAttribute("class");
+    game.setAttribute("style", "width: " + width + "px; " + "height: " + height + "px");
+    document.getElementById("winner").innerText=""
 }
-
+//print array and update array's attributes and value
 function printGame() {
     let game = document.getElementById("game");
     let svg = document.getElementById("svg");
@@ -92,13 +99,15 @@ function printGame() {
             game.appendChild(htmlElem);
         }
     }
+    //check svg ,activate button,print message result
     if (svg) {
         game.insertBefore(svg, game.firstChild);
         game.setAttribute("class", "disabled");
         document.getElementById("clear").setAttribute("class", "displayBlock");
+        printWinner()
     }
 }
-
+// check horizontal winner combination
 function checkHorizontal(){
     for (let i = 0; i < gameSize; i++) {
         let line = gameField[i];
@@ -108,10 +117,11 @@ function checkHorizontal(){
             x1 = 0;
             x2 = width;
             printLine(x1,y1,x2,y2);
+            printWinner()
         }
     }
 }
-
+// check vertical winner combination
 function checkVertical(){
     let array = [gameSize];
     for (let i = 0; i < gameSize; i++) {
@@ -124,10 +134,12 @@ function checkVertical(){
             y1 = 0;
             y2 = height;
             printLine(x1, y1, x2, y2);
+            printWinner()
+
         }
     }
 }
-
+// check left diagonal winner combination
 function checkDiagonalFromLeftCorner(){
     let array = [gameSize];
     for (let i = 0; i < gameSize; i++) {
@@ -140,9 +152,10 @@ function checkDiagonalFromLeftCorner(){
         x2 = width;
         y2 = height;
         printLine(x1, y1, x2, y2);
+        printWinner()
     }
 }
-
+// check right diagonal winner combination
 function checkDiagonalFromRightCorner(){
     let array = [gameSize];
     for (let i = 0; i < gameSize; i++) {
@@ -155,9 +168,10 @@ function checkDiagonalFromRightCorner(){
         x2 = 0;
         y2 = height;
         printLine(x1, y1, x2, y2);
+        printWinner()
     }
 }
-
+//check all value X or 0 in array, return boolean
 function isAllX(arr){
     let value = true;
 
@@ -165,22 +179,18 @@ function isAllX(arr){
         if( arr[i] !== "X"){
          value=false;}
     }
-
     return value;
 }
 
 function isAllO(arr){
     let value = true;
-
-    for (let i = 0; i < arr.length; i++) {
+        for (let i = 0; i < arr.length; i++) {
         if( arr[i] !== "0"){
             value=false;}
-    }
-
+         }
     return value;
-
 }
-
+//create svg line and set them attributes
 function printLine(x1, y1, x2, y2) {
     let svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
     let line= document.createElementNS('http://www.w3.org/2000/svg','line');
@@ -198,4 +208,9 @@ function printLine(x1, y1, x2, y2) {
 
     game.insertBefore(svg, game.firstChild);
     document.getElementById("svg").appendChild(line);
+}
+//print the result of game
+function printWinner(){
+    let winner= document.getElementById("winner");
+    winner.innerText= "You win!";
 }

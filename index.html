@@ -9,9 +9,18 @@
 </head>
 <body>
     <h1 id=name>Tic tac toe game</h1>
+    <div id = "player"> Player  </div>
     <div id="game"></div>
-    <input id="clear" type="button" value="New game" onclick="startGame()"/>;
-    <div id = "winner"> Result of game </div>
+    <input id="clear" type="button" value="Restart" onclick="startGame(),modal()"/>
+    <div id = "winner">Result of game</div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <p>Set size of game field</p>
+            <input type="number" id="gameSize" value="5">
+            <input type="button" id="openModal" onclick="startGame()" value="Start game"/>
+        </div>
+    </div>
 
 </body>
 </html>

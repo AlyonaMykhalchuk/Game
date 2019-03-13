@@ -1,121 +1,81 @@
 body{
+    background-color: gray;
     padding: 0; margin: 0;
-    background: repeating-linear-gradient(
-            to right,
-            palevioletred 0%, navajowhite 50px,
-
-            lightcyan 201px, antiquewhite 250px,
-            lightblue 251px, whitesmoke 300px,
-            peachpuff 301px, white 350px
-    );
 }
-#game{
-    background-color: papayawhip;
-    position:relative;
-    margin: auto;
-    border: 10px solid hotpink;
-    display: block;
-}
-
-#svg{
-    position:absolute;
-}
-
 .block{
     width: 100px;
     height: 100px;
     float:left;
-    border: 6px solid white;
-    box-sizing: border-box;
+    border: 4px solid white;
 
+    box-sizing: border-box;
     text-align: center;
     font-size: 60px;
+    border-radius: 20px;
 }
 
 .block:hover{
-    border:4px solid lightblue;
-    background-color: papayawhip;
+    border:4px solid white;
+    background-color: rgba(3,2,59,0.52);
 }
-#openModal{
-    cursor: pointer ;
-    background-color: lightgreen;
-    font-size: 20px;
-    width: 160px;
-    height: 30px;
-    position:relative;
-
-    margin: auto;
-    display: block;
-
-}
-
-
-.overflow {
-    width: 100%;
-    height: 100%;
-    z-index: 9998;
-    background: rgba(0,0,0,0.7);
-    position: absolute;
-    top: 0;}
 
 
 .closed{
     width: 100px;
     height: 100px;
     float:left;
-    border: 6px solid white;
+    border: 4px solid white;
     box-sizing: border-box;
     text-align: center;
     font-size: 80px;
-    color: blue;
-    background-color: pink;
+    color: floralwhite;
+    background-color:darkslategray;
     justify-content: center;
+    border-radius: 20px;
 }
-
-#name{
-    background-color: white;
-    text-shadow: 5px 4px 3px #999;
-    color:blue;
-    text-align: center;
-}
-
-#player{
-    background-color: white;
-
-    color:blue;
-    text-align: center;
-    font-size: x-large;
-}
-
-#clear{
-    background-color: lightgreen;
-    font-size: 20px;
-    width: 160px;
-    height: 55px;
-    position:relative;
-    top: 20px;
-    margin: auto;
-    display: block;
-}
-
-#restart{
-    background-color: greenyellow;
-    font-size: 20px;
-    width: 160px;
-    height: 55px;
-    position:relative;
-    top: 20px;
-    margin: auto;
-}
-
 .displayNone {
     display:none;
 }
-
 .displayBlock {
     display:block;
 }
+.disabled {
+    pointer-events: none;
+}
+.modal {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 150%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
 
+
+.modal-content {
+    background-color: rosybrown;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    text-align: center;
+    font-size: x-large;
+    color: white;
+}
+
+#winner{
+    display: block;
+    top: 20px;
+    position: relative;
+    background-color: white;
+    color: darkred;
+    text-align: center;
+    font-weight: bold;
+    font-size: xx-large;
+}
 #result{
     background-color: antiquewhite;
     border: 3px solid grey;
@@ -125,39 +85,52 @@ body{
 
 }
 
-.disabled {
-    pointer-events: none;
-}
-#winner{
-    display: block;
-    top: 20px;
-    position: relative;
-    background-color: white;
-    color:red;
-    text-align: center;
+#clear{
+    background-color: rgba(3,2,59,0.52);
+    font-size: 20px;
     font-weight: bold;
+    color:white;
+    width: 160px;
+    height: 55px;
+    position:relative;
+    top: 20px;
+    margin: auto;
+    display: block;
+}
+#name{
+    background-color: white;
+    text-shadow: 5px 4px 3px #999;
+    color: rgba(50,13,59,0.81);
+    text-align: center;
+}
+
+#player{
+    background-color: white ;
+
+    color:blue;
+    text-align: center;
     font-size: x-large;
+}
+#openModal{
+    cursor: pointer ;
+    background-color: lightgreen;
+    font-size: 20px;
+    width: 160px;
+    height: 30px;
+    position:relative;
+    top: 20px;
+    margin: auto;
+    display: block;
+}
+#game{
+    background-color: rosybrown;
+    position:relative;
+    margin: auto;
+    padding: 50px;
+    display: block;
 
 }
 
-.modal {
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+#svg{
+    position:absolute;
 }
-
-/* Modal Content/Box */
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-}
-

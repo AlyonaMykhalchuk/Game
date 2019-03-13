@@ -205,7 +205,7 @@ function printLine(x1, y1, x2, y2) {
     line.setAttribute("y1", y1);
     line.setAttribute("x2", x2);
     line.setAttribute("y2", y2);
-    line.setAttribute("stroke","deeppink");
+    line.setAttribute("stroke","rgba(184,141,218,0.81)");
     line.setAttribute("stroke-width","10");
     line.setAttribute("id", "line");
 

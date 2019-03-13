@@ -75,6 +75,8 @@ body{
     text-align: center;
     font-weight: bold;
     font-size: xx-large;
+    font-family: URW Chancery L, cursive;
+    text-shadow: 5px 4px 3px #999;
 }
 #result{
     background-color: antiquewhite;

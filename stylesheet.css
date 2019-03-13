@@ -63,12 +63,13 @@ body{
     text-align: center;
     font-size: xx-large;
     font-family: URW Chancery L, cursive;
+    text-shadow: 5px 4px 3px #999;
     color: white;
 }
 
 #winner{
     display: block;
-    top: 20px;
+    top: 30px;
     position: relative;
     background-color: white;
     color: darkred;
@@ -84,7 +85,6 @@ body{
     height: 50px;
     font-weight: bold;
     text-align: center;
-
 }
 
 #clear{
@@ -106,7 +106,6 @@ body{
     text-align: center;
     font-size: 50px ;
     margin: auto;
-
 }
 
 #player{

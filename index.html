@@ -17,7 +17,9 @@
     <div id="myModal" class="modal">
         <div class="modal-content">
             <p>Set size of game field</p>
-            <input type="number" id="gameSize" value="5">
+            <input type="number" id="gameSize" value="3" min="3">
+            <p> Set win line size</p>
+            <input type="number" id="winLineSize" value="3" min="3">
             <input type="button" id="openModal" onclick="startGame()" value="Start game"/>
         </div>
     </div>

@@ -3,11 +3,8 @@ let side = 100;
 let height;
 let width;
 let gameField;
-let x1;
-let y1;
-let x2;
-let y2;
 let step;
+let count;
 
 
 window.onload = function () {
@@ -15,15 +12,16 @@ window.onload = function () {
 };
 
 function startGame() {
-    gameSize = document.getElementById("gameSize").value;
+    gameSize = parseInt(document.getElementById("gameSize").value);
     height = gameSize * side;
     width = gameSize * side;
     gameField = [gameSize];
+    count = parseInt(setWinLineSize());
     let modal = document.getElementById("myModal");
     modal.style.display = "none";
     clearData();
-    populateArrayWithValues();// fill the two-dimensional array with initial values
-    printGame();// draw array
+    populateArrayWithValues();// fill the array with initial values
+    printGame();// draw game field
     step = 0;
     game.onclick = function(event) {
         if (event.target.className === "block") {
@@ -32,7 +30,7 @@ function startGame() {
             let i = array[0];
             let j = array[1];
 
-            (step % 2 === 0) ? gameField[i][j] = "X": gameField[i][j] = "0";
+            (step % 2 === 0) ? gameField[i][j].val = "X": gameField[i][j].val = "0";
             (step % 2 === 0) ? document.getElementById("player").innerText = "Next player '0'":
                 document.getElementById("player").innerText = "Next player 'X'";
 
@@ -49,17 +47,25 @@ function startGame() {
 
             let cell = document.getElementById(id);
             cell.setAttribute("class", "closed");
-            cell.innerText = gameField[i][j];
+            cell.innerText = gameField[i][j].val;
         }
     }
 }
 
-// fill the two-dimensional array with initial values
+
+function setWinLineSize () {
+    let inputCount = document.getElementById("winLineSize").value;
+    if( inputCount > gameSize){
+        inputCount = gameSize;
+    }
+    return inputCount;
+}
+// fill the array with initial values
 function populateArrayWithValues() {
     for (let i = 0; i < gameSize; i++) {
         let line = [gameSize];
         for (let j = 0; j < gameSize; j++) {
-            line[j] = "";
+            line[j] = new Cell(i, j, "");
         }
         gameField[i] = line;
     }
@@ -69,8 +75,9 @@ function populateArrayWithValues() {
 function checkWinner() {
     if (checkHorizontal()) return true;
     if (checkVertical()) return true;
-    if (checkDiagonalFromLeftCorner()) return true;
-    if (checkDiagonalFromRightCorner()) return true;
+    if (checkDiagonalFromLeftToRight()) return true;
+    if (checkDiagonalFromRightToLeft()) return true;
+    return false;
 }
 
 function clearData() {
@@ -101,12 +108,11 @@ function printGame() {
 function checkHorizontal(){
     for (let i = 0; i < gameSize; i++) {
         let line = gameField[i];
-        if(isAllX(line) || isAllO(line)){
-            let x1, x2, y1, y2;
-            y1 = y2 = (i * side) + (side * 0.5);
-            x1 = 10;
-            x2 = width-10;
-            printLine(x1,y1,x2,y2);
+        if(isContaineWinCombination(line, "X")) {
+            printWinner();
+            return true;
+        }
+        if (isContaineWinCombination(line, "0")) {
             printWinner();
             return true;
         }
@@ -121,12 +127,11 @@ function checkVertical(){
         for (let j = 0; j < gameSize; j++) {
             array[j] = gameField[j][i];
         }
-        if (isAllX(array) || isAllO(array)) {
-            let x1, x2, y1, y2;
-            x1 = x2 = (i * side) + (side * 0.5);
-            y1 = 10;
-            y2 = height-10;
-            printLine(x1, y1, x2, y2);
+        if(isContaineWinCombination(array, "X")) {
+            printWinner();
+            return true;
+        }
+        if (isContaineWinCombination(array, "0")) {
             printWinner();
             return true;
         }
@@ -135,63 +140,119 @@ function checkVertical(){
 }
 
 // check left diagonal winner combination
-function checkDiagonalFromLeftCorner(){
-    let array = [gameSize];
+function checkDiagonalFromLeftToRight(){
     for (let i = 0; i < gameSize; i++) {
-        array[i] = gameField[i][i];
+        let array = [i + 1];
+        let iCounter = gameSize - 1 - i;
+        for (let j = 0; j < i + 1; j++ ) {
+            array[j] = gameField[iCounter][j];
+            iCounter++;
+        }
+
+        if (isContaineWinCombination(array, "X")) {
+            printWinner();
+            return true;
+        }
+        if (isContaineWinCombination(array, "0")) {
+            printWinner();
+            return true;
+        }
     }
-    if (isAllX(array) || isAllO(array)) {
-        let x1, x2, y1, y2;
-        x1 = 10;
-        y1 = 10;
-        x2 = width-10;
-        y2 = height -10;
-        printLine(x1, y1, x2, y2);
-        printWinner();
-        return true;
+
+    for (let i = 0; i < gameSize; i++) {
+        let array = [i + 1];
+        let iCounter = gameSize - 1 - i;
+        for (let j = 0; j < i + 1; j++ ) {
+            array[j] = gameField[j][iCounter];
+            iCounter++;
+        }
+
+        if (isContaineWinCombination(array, "X")) {
+            printWinner();
+            return true;
+        }
+        if (isContaineWinCombination(array, "0")) {
+            printWinner();
+            return true;
+        }
     }
+
     return false;
 }
 
 // check right diagonal winner combination
-function checkDiagonalFromRightCorner(){
-    let array = [gameSize];
+function checkDiagonalFromRightToLeft(){
+    for (let i = gameSize-1; i >=0; i--) {
+        let array = [i + 1];
+        let iCounter = i;
+        for (let j = 0; j <=i; j++ ) {
+            array[j] = gameField[iCounter][j];
+            iCounter--;
+        }
+
+        if (isContaineWinCombination(array, "X")) {
+            printWinner();
+            return true;
+        }
+        if (isContaineWinCombination(array, "0")) {
+            printWinner();
+            return true;
+        }
+    }
+
     for (let i = 0; i < gameSize; i++) {
-        array[i] = gameField[i][gameSize - 1 - i];
+        let array = [gameSize-i];
+        let iCounter = i;
+        for (let j = gameSize - 1; j >= i; j--) {
+            array[j - i] = gameField[iCounter][j];
+            iCounter++;
+        }
+
+        if (isContaineWinCombination(array, "X")) {
+            printWinner();
+            return true;
+        }
+        if (isContaineWinCombination(array, "0")) {
+            printWinner();
+            return true;
+        }
     }
-    if (isAllX(array) || isAllO(array)) {
-        let x1, x2, y1, y2;
-        x1 = width-10;
-        y1 = 10;
-        x2 = 10;
-        y2 = height-10;
-        printLine(x1, y1, x2, y2);
-        printWinner();
-        return true;
-    }
+
     return false;
 }
 
 //check all value X or 0 in array, return boolean
-function isAllX(arr){
-    let value = true;
-
+function isContaineWinCombination(arr, val) {
+    let counter = 0;
+    let firstCell;
+    let lastCell;
     for (let i = 0; i < arr.length; i++) {
-        if( arr[i] !== "X"){
-         value=false;}
+        if ( counter === 0) {
+            firstCell = arr[i]
+        }
+
+        if (arr[i].val === val) {
+            counter++;
+            if (counter === count) {
+                lastCell = arr[i];
+                printLine(
+                    countCoordinate(firstCell.j),
+                    countCoordinate(firstCell.i),
+                    countCoordinate(lastCell.j),
+                    countCoordinate(lastCell.i));
+                return true
+            }
+        } else {
+            counter = 0;
+        }
     }
-    return value;
+    return false ;
 }
+// calculate coordinate of line
 
-function isAllO(arr){
-    let value = true;
-        for (let i = 0; i < arr.length; i++) {
-        if( arr[i] !== "0"){
-            value=false;}
-         }
-    return value;
+function countCoordinate (val){
+   return (val * side ) + (side / 2);
 }
-
 //create svg line and set them attributes
 function printLine(x1, y1, x2, y2) {
     let svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
@@ -223,3 +284,10 @@ function modal(){
     document.getElementById("myModal").setAttribute("style", "display: block");
 }
 
+class Cell {
+    constructor(i, j, val) {
+        this.i = i;
+        this.j = j;
+        this.val = val;
+    }
+}
